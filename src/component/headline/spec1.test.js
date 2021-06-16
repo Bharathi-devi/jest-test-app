@@ -1,6 +1,6 @@
 import React from 'react';
 import {shallow} from 'enzyme';
-import {findByTestAttr} from './../../../Utils';
+import {findByTestAttr,checkProps} from './../../../Utils';
 import Headline from './index';
 
 const setUp=(props)=>
@@ -10,16 +10,38 @@ const setUp=(props)=>
     };
 
 describe('Headline Component',()=>{
+    const expectedProps={
+        header:'Test header',
+        desc:'Test Desc',
+        tempArr:[{
+            fname:'Test fnbame',
+            lName:'test Lname',
+            email:'test@email.com',
+            age:20,
+            onlineStatus:false
+        }]
+    };
+
+   describe('checking Proptypes',()=>
+   {
+    
+      
+       it('Should not throw a warning',()=>
+       {
+         const propsErr=checkProps(Headline,expectedProps);
+         expect(propsErr).toBeUndefined();
+
+
+       });
+   })
+
     describe('Have props',()=>
     {
         let component1;
      beforeEach(()=>{
          
-         const props={
-            header: 'Test Header',
-            desc:'Test Desc'
-         };
-         component1= setUp(props);
+         
+         component1= setUp(expectedProps);
      });
 
     it('Should render without errors',()=>
