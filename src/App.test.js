@@ -40,8 +40,24 @@ describe('App Component', ()=>
          expect(wrapper.length).toBe(1);
     })
 
+     it('exampleMethod_updatesstate methos should update state as expected',()=>
+     {
+         const classInstance = component.instanace();
+         classInstance.exampleMethod_updatesstate();
+         const newState= classInstance.state.hideSharedButton;
+         expect(newState).toBe(true);
 
+     })
 
+     
+     it('exampleMethod_updateNumer methos should update number as expected',()=>
+     {
+         const classInstance = component.instanace();
+   const newValue =classInstance.exampleMethod_updateNumer(6);
+         
+         expect(newValue).toBe(7);
+
+     })
 
 
 

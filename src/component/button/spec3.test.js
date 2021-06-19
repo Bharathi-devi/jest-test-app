@@ -1,8 +1,10 @@
-import { italics } from 'prop-types/lib/ReactPropTypesSecret';
+
 import React from 'react';
 import {findByTestAttr, checkProps} from './../../../Utils/index';
 import SharedButton from './index';
-import {shallow} from 'enzyme';
+import {shallow,} from 'enzyme';
+import jest from 'jest';
+// import jest from 'jest';
 describe('shared Button component',()=>
 {
     describe('Checking propTypes',()=>
@@ -17,19 +19,22 @@ describe('shared Button component',()=>
             };
             const propsError=checkProps(SharedButton,expectedProps);
             expect(propsError).toBeUndefined
-        })
-    })
+        });
+    });
 
     describe('Renders',()=>
     {
-        const props={
-            buttonText:'Example Button Text',
-            emitEvent:()=>{
-
-            }};
         let component;
+        let mockFunc;
+        
         beforeEach(()=>
-        {
+        {  
+             mockFunc= jest.fn();
+            const props={
+           
+                buttonText:'Example Button Text',
+                emitEvent:mockFunc
+            }
           component=shallow(<SharedButton  {...props}/>);
         });
 
@@ -38,5 +43,14 @@ describe('shared Button component',()=>
             const button =findByTestAttr(component, 'buttonComponent');
             expect(button.length).toBe(1);
         });
-    })
-})
+        it('Should emit callback on click event',()=>
+        {
+            const button =findByTestAttr(component, 'buttonComponent');
+            button.simulate('click');
+            const callback= mockFunc.mock.calls.length;
+            expect(callback).toBe(1);
+        });
+
+
+    });
+});
